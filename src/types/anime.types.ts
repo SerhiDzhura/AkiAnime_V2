@@ -28,7 +28,6 @@ export interface AnimeList {
     [x: string]: string
     ru: string
     en: string
-    alternative?: string
   }
   
   export interface Franchise {

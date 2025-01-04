@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { $api } from '../../api';
 import { Pagination, PaginationProps } from 'antd';
-import { Link } from 'react-router-dom';
 import { AnimeList, IPagination, Title } from '../../types/anime.types';
 import { AnimeCard } from '../../components';
 import { Loader } from '../../components/Loader/Loader';

@@ -38,7 +38,7 @@ export const AnimeDetailPage = () => {
           <img src={IMG_HOST + title?.posters.original.url} alt="" />
           <div>
             <p className="text-justify">{title?.description}</p>
-            <div className="flex flex-wrap gap-2 p-2">
+            <div className="flex flex-wrap gap-2 py-2">
               {title?.genres.map(genre => (
                 <Badge text={genre} />
               ))}
