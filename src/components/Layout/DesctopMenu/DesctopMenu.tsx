@@ -13,13 +13,13 @@ export const DesctopMenu = () => {
             className="header-link text-lg font-semibold">
               Список аниме
             </NavLink>
-            <NavLink to="/last-updates" 
-            className="header-link text-lg font-semibold">
-              Последние обновления
-            </NavLink>
             <NavLink to="/schedule" 
             className="header-link text-lg font-semibold">
-              Расписание
+             Расписание
+            </NavLink>
+            <NavLink to="/random" 
+            className="header-link text-lg font-semibold">
+              Случайно
             </NavLink>
           </div>
         </nav>

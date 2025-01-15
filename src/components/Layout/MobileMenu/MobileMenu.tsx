@@ -17,20 +17,20 @@ export const MobileMenu = () => {
           </button>
         </nav>
       </header>
-      <div 
+      <div
         className={`md:hidden absolute top-0 left-0 w-full h-full bg-slate-800 py-24 transition-transform ${
-        active ? '-translate-y-0' : '-translate-y-full'
-          }`}
-        >
+          active ? '-translate-y-0' : '-translate-y-full'
+        }`}
+      >
         <nav className="w-full h-full container flex flex-col items-end gap-5">
           <NavLink to="/anime-list" className="text-2xl font-semibold">
             Список аниме
           </NavLink>
-          <NavLink to="/last-updates" className="text-2xl font-semibold">
-              Последние обновления
-          </NavLink>
           <NavLink to="/schedule" className="text-2xl font-semibold">
             Расписание
+          </NavLink>
+          <NavLink to="/random" className="text-2xl font-semibold">
+            Случайно
           </NavLink>
         </nav>
       </div>
