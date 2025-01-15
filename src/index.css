@@ -31,7 +31,7 @@ span.ant-pagination-item-ellipsis {
 }
 
 .header-link {
-  @apply relative text-white px-0.5 py-0.5 transition-colors duration-300; /* Мінімальні горизонтальні та вертикальні відступи */
+  @apply relative text-white px-0 py-0 transition-colors duration-300; 
 }
 
 .header-link:hover {
@@ -39,10 +39,11 @@ span.ant-pagination-item-ellipsis {
 }
 
 .menu-container {
-  @apply w-full flex justify-center items-center py-1 gap-0.5 bg-slate-900; /* Мінімальні відстані між елементами */
+  @apply w-full flex justify-center items-center py-0 gap-0 bg-slate-900; 
 }
 
 .menu-container > .header-link {
-  @apply m-0; /* Відсутність зовнішніх відступів між посиланнями */
+  @apply m-0; 
 }
+
   
