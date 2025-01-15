@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom'; // Для відстеження переходів між сторінками
 import { $api, IMG_HOST, VIDEO_HOST } from '../../api';
 import { Title } from '../../types/anime.types';
 import ReactPlayer from 'react-player';
@@ -9,16 +10,17 @@ export const AnimeRandomPage = () => {
   const [title, setTitle] = useState<Title | null>(null);
   const [activeEpisode, setActiveEpisode] = useState(1);
   const [loading, setLoading] = useState(true);
+  const location = useLocation(); // Відстежуємо зміну маршруту
 
   useEffect(() => {
-    fetchRandomAnime();
-  }, []);
+    fetchRandomAnime(); // Завантажуємо випадкове аніме при завантаженні сторінки або зміні маршруту
+  }, [location]); // Додано залежність від `location`
 
   const fetchRandomAnime = () => {
     setLoading(true);
     $api
       .get<Title>('/title/random', { params: { playlist_type: 'array' } })
-      .then(response => {
+      .then((response) => {
         setTitle(response.data);
         setLoading(false);
       })
@@ -55,7 +57,7 @@ export const AnimeRandomPage = () => {
             <h1 className="text-2xl font-bold text-white mb-3">{title?.names.ru}</h1>
             <p className="text-justify">{title?.description}</p>
             <div className="flex flex-wrap gap-2 py-2">
-              {title?.genres.map(genre => (
+              {title?.genres.map((genre) => (
                 <Badge key={genre} text={genre} />
               ))}
             </div>
@@ -66,16 +68,16 @@ export const AnimeRandomPage = () => {
         <div className="p-5 bg-slate-800/20 rounded-lg">
           <select
             value={activeEpisode}
-            onChange={e => setActiveEpisode(Number(e.target.value))}
+            onChange={(e) => setActiveEpisode(Number(e.target.value))}
             className="w-full bg-slate-800 p-2 rounded-lg outline-none cursor-pointer"
           >
-            {title?.player.list.map(episode => (
+            {title?.player.list.map((episode) => (
               <option key={episode?.uuid} value={episode?.episode}>
                 Серия {episode?.episode}
               </option>
             ))}
           </select>
-          {title?.player.list.map(episode => (
+          {title?.player.list.map((episode) => (
             <div className="mt-5" key={episode?.uuid}>
               {episode?.episode === activeEpisode && (
                 <ReactPlayer

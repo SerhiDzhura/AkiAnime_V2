@@ -29,3 +29,16 @@ li.ant-pagination-item:not(.ant-pagination-item-active)>a {
 span.ant-pagination-item-ellipsis {
     color: white !important ;
 }
+
+.header-link {
+    @apply relative text-white px-4 py-2 transition-colors duration-300;
+  }
+  
+  .header-link:hover {
+    @apply text-blue-500;
+  }
+  
+  .menu-container {
+    @apply w-full flex justify-center items-center py-5 bg-slate-900;
+  }
+  
