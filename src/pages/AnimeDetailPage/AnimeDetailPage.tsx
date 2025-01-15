@@ -25,7 +25,7 @@ export const AnimeDetailPage = () => {
         setTitle(response?.data);
         setLoading(false);
       });
-  }, []);
+  }, [code]); // Додано залежність code
 
   if (loading) {
     return <Loader />;
@@ -35,12 +35,14 @@ export const AnimeDetailPage = () => {
     <>
       <div className="container py-5">
         <div className="flex flex-col items-center gap-5 md:flex-row md:items-start">
-          <img src={IMG_HOST + title?.posters.original.url} alt="" />
+          <img src={IMG_HOST + title?.posters.original.url} alt={title?.names.ru} />
           <div>
+            {/* Додано відображення назви аніме */}
+            <h1 className="text-2xl font-bold text-white mb-3">{title?.names.ru}</h1>
             <p className="text-justify">{title?.description}</p>
             <div className="flex flex-wrap gap-2 py-2">
               {title?.genres.map(genre => (
-                <Badge text={genre} />
+                <Badge key={genre} text={genre} />
               ))}
             </div>
           </div>
@@ -54,19 +56,21 @@ export const AnimeDetailPage = () => {
             className="w-full bg-slate-800 p-2 rounded-lg outline-none cursor-pointer"
           >
             {title?.player.list.map(episode => (
-              <option value={episode?.episode}>Серия {episode?.episode}</option>
+              <option key={episode?.uuid} value={episode?.episode}>
+                Серия {episode?.episode}
+              </option>
             ))}
           </select>
           {title?.player.list.map(episode => (
             <div className="mt-5" key={episode?.uuid}>
-              {episode?.episode == activeEpisode ? (
+              {episode?.episode === activeEpisode && (
                 <ReactPlayer
                   width="100%"
                   height="100%"
                   url={VIDEO_HOST + episode?.hls.hd}
                   controls
                 />
-              ) : null}
+              )}
             </div>
           ))}
         </div>

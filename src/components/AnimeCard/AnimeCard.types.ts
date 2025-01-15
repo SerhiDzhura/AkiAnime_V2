@@ -1,5 +1,5 @@
-export interface AnimeCardProps{
-    image: string;
-    title: string;
-     code: string;
+export interface AnimeCardProps {
+  image: string;
+  title: string;
+  code: string;
 }

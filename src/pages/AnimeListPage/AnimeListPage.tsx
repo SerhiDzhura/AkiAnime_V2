@@ -54,13 +54,13 @@ export const AnimeListPage = () => {
         <div className="flex items-center justify-center py-5">
           <Pagination
             responsive // адаптивність для різних пристроїв
-            current={activePage} // активна сторінка
-            total={pagination?.pages} // загальна кількість сторінок
-            defaultCurrent={1} // стартова сторінка
-            onChange={changePage} // функція зміни сторінки
-            showSizeChanger={false} // приховати зміну кількості елементів
-            size="small" // компактний розмір (за бажанням)
-            className="block" // універсальний клас для стилізації
+            current={activePage} 
+            total={pagination?.pages} 
+            defaultCurrent={1} 
+            onChange={changePage} 
+            showSizeChanger={false} 
+            size="small" 
+            className="block" 
           />
         </div>
       </div>
