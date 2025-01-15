@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom'; // Для відстеження переходів між сторінками
+import { useLocation } from 'react-router-dom'; 
 import { $api, IMG_HOST, VIDEO_HOST } from '../../api';
 import { Title } from '../../types/anime.types';
 import ReactPlayer from 'react-player';
@@ -10,11 +10,11 @@ export const AnimeRandomPage = () => {
   const [title, setTitle] = useState<Title | null>(null);
   const [activeEpisode, setActiveEpisode] = useState(1);
   const [loading, setLoading] = useState(true);
-  const location = useLocation(); // Відстежуємо зміну маршруту
+  const location = useLocation(); 
 
   useEffect(() => {
-    fetchRandomAnime(); // Завантажуємо випадкове аніме при завантаженні сторінки або зміні маршруту
-  }, [location]); // Додано залежність від `location`
+    fetchRandomAnime(); 
+  }, [location]); 
 
   const fetchRandomAnime = () => {
     setLoading(true);

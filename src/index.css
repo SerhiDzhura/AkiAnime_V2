@@ -31,14 +31,18 @@ span.ant-pagination-item-ellipsis {
 }
 
 .header-link {
-    @apply relative text-white px-4 py-2 transition-colors duration-300;
-  }
-  
-  .header-link:hover {
-    @apply text-blue-500;
-  }
-  
-  .menu-container {
-    @apply w-full flex justify-center items-center py-5 bg-slate-900;
-  }
+  @apply relative text-white px-0.5 py-0.5 transition-colors duration-300; /* Мінімальні горизонтальні та вертикальні відступи */
+}
+
+.header-link:hover {
+  @apply text-blue-500;
+}
+
+.menu-container {
+  @apply w-full flex justify-center items-center py-1 gap-0.5 bg-slate-900; /* Мінімальні відстані між елементами */
+}
+
+.menu-container > .header-link {
+  @apply m-0; /* Відсутність зовнішніх відступів між посиланнями */
+}
   
