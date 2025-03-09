@@ -37,7 +37,7 @@ export const AnimeDetailPage = () => {
   if (loading) {
     return <Loader />;
   }
-
+  // Автоматичний перехід між епізодами
   const handleEpisodeEnd = () => {
     if (title?.player.list) {
       const nextEpisode = title.player.list.find(e => e.episode === activeEpisode + 1);
