@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'; 
 import { useParams, Link } from 'react-router-dom';
 import { $api, IMG_HOST, VIDEO_HOST } from '../../api';
 import { Title } from '../../types/anime.types';
@@ -27,9 +27,25 @@ export const AnimeDetailPage = () => {
       });
   }, [code]);
 
+  useEffect(() => {
+    const videoElement = document.querySelector('video');
+    if (videoElement) {
+      videoElement.play();
+    }
+  }, [activeEpisode]);
+
   if (loading) {
     return <Loader />;
   }
+
+  const handleEpisodeEnd = () => {
+    if (title?.player.list) {
+      const nextEpisode = title.player.list.find(e => e.episode === activeEpisode + 1);
+      if (nextEpisode) {
+        setActiveEpisode(nextEpisode.episode);
+      }
+    }
+  };
 
   return (
     <>
@@ -75,7 +91,6 @@ export const AnimeDetailPage = () => {
           </div>
         </div>
       </div>
-
       <div className="container py-5">
         <div className="p-5 bg-slate-800/20 rounded-lg">
           <select
@@ -97,6 +112,7 @@ export const AnimeDetailPage = () => {
                   height="100%"
                   url={VIDEO_HOST + episode?.hls.hd}
                   controls
+                  onEnded={handleEpisodeEnd}
                 />
               )}
             </div>
