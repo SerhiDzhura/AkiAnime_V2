@@ -23,6 +23,9 @@ export const MobileMenu = () => {
         }`}
       >
         <nav className="w-full h-full container flex flex-col items-end gap-5">
+          <NavLink to ="/catalog" className="text-2xl font-semibold">
+            Каталог
+          </NavLink>
           <NavLink to="/anime-list" className="text-2xl font-semibold">
             Список аниме
           </NavLink>

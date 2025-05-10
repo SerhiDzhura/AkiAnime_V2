@@ -2,7 +2,7 @@ import axios from 'axios';
 import { IScheduleArray, Title } from '../types/anime.schedule';
 
 
-export const IMG_HOST = 'https://static-libria.weekstorm.us';
+export const IMG_HOST = 'https://anilibria.top';
 export const VIDEO_HOST = 'https://cache.libria.fun';
 
 export const $api = axios.create({

@@ -9,6 +9,10 @@ export const DesctopMenu = () => {
             <Link to="/">AkiAnime</Link>
           </h1>
           <div className="flex gap-5">
+            <NavLink to="/catalog"
+            className="header-link text-lg font-semibold">
+              Каталог
+            </NavLink>
             <NavLink to="/anime-list" 
             className="header-link text-lg font-semibold">
               Список аниме

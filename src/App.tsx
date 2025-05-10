@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { HomePage, AnimeListPage, AnimeDetailPage, AnimeSchedulePage, AnimeRandomPage } from './pages';
+import { HomePage, AnimeListPage, AnimeDetailPage, AnimeSchedulePage, AnimeRandomPage, AnimeCatalogPage, AnimeCatalogDetailPage  } from './pages';
 import { Layout } from './components';
 
 export const App = () => {
@@ -12,6 +12,8 @@ export const App = () => {
           <Route path="/title/:code" element={<AnimeDetailPage />} />
           <Route path="/schedule"element={<AnimeSchedulePage />}/>
           <Route path="/random"element={<AnimeRandomPage />}/>
+          <Route path="/catalog"element={<AnimeCatalogPage/>}/>
+          <Route path='/anime/:id'element={<AnimeCatalogDetailPage/>}/>
         </Route>
       </Routes>
     </>
