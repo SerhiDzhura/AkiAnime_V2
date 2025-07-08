@@ -2,36 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
-
 html,
 body,
-#root{
-    @apply min-h-full min-w-full overflow-x-auto bg-slate-950 text-white;
+#root {
+  @apply min-h-full min-w-full overflow-x-auto bg-slate-950 text-white;
 }
-
 
 .header-link.active {
-    @apply text-blue-500
-}
-
-.anticon.anticon-left,
-.anticon.anticon-right {
-    @apply text-white;
-}
-
-li.ant-pagination-item:not(.ant-pagination-item-active)>a {
-   color: white !important; 
-}
-
-
-span.ant-pagination-item-ellipsis {
-    color: white !important ;
+  @apply text-blue-500;
 }
 
 .header-link {
-  @apply relative text-white px-0 py-0 transition-colors duration-300; 
+  @apply relative text-white px-0 py-0 transition-colors duration-300;
 }
 
 .header-link:hover {
@@ -39,12 +21,66 @@ span.ant-pagination-item-ellipsis {
 }
 
 .menu-container {
-  @apply w-full flex justify-center items-center py-0 gap-0 bg-slate-900; 
+  @apply w-full flex justify-center items-center py-0 gap-0 bg-slate-900;
 }
 
 .menu-container > .header-link {
-  @apply m-0; 
+  @apply m-0;
 }
 
 
-  
+/* --- Dark Pagination --- */
+.dark-pagination-page,
+.dark-pagination-arrow {
+  background: transparent;
+  color: #e0e7ef;
+  border: none;
+  border-radius: 8px;
+  min-width: 36px;
+  height: 36px;
+  margin: 0 2px;
+  font-size: 1rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s, border 0.2s;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dark-pagination-page:not(.active):hover,
+.dark-pagination-arrow:not(:disabled):hover {
+  background: #1e293b;
+  color: #60a5fa;
+  box-shadow: 0 0 0 2px #2563eb33;
+}
+
+.dark-pagination-page.active {
+  background: #fff;
+  color: #2563eb;
+  border-radius: 12px;
+  border: 2px solid #2563eb;
+  font-weight: 700;
+  box-shadow: 0 0 8px 0 #2563eb33;
+  cursor: default;
+  pointer-events: none;
+  transition: background 0.2s, color 0.2s, border 0.2s;
+}
+
+.dark-pagination-arrow:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.dark-pagination-ellipsis {
+  color: #94a3b8;
+  font-size: 1.2rem;
+  padding: 0 6px;
+  user-select: none;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  height: 36px;
+}
+/* --- End Dark Pagination --- */

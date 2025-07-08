@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'; 
+import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { $api, IMG_HOST, VIDEO_HOST } from '../../api';
 import { Title } from '../../types/anime.types';
@@ -12,6 +12,9 @@ export const AnimeDetailPage = () => {
   const { code } = useParams();
   const [loading, setLoading] = useState(true);
 
+  // Додаємо стейт для всіх сезонів
+  const [allReleases, setAllReleases] = useState<any[]>([]);
+
   useEffect(() => {
     setLoading(true);
     $api
@@ -24,6 +27,56 @@ export const AnimeDetailPage = () => {
       .then(response => {
         setTitle(response?.data);
         setLoading(false);
+
+        // Додаємо логування для дебагу
+        console.log('franchises:', response?.data?.franchises);
+        console.log(
+          'franchises[0]?.releases:',
+          response?.data?.franchises?.[0]?.releases,
+        );
+
+        // Якщо франшиза є і релізів достатньо — використовуємо їх
+        if (
+          response?.data?.franchises?.[0]?.releases &&
+          response.data.franchises[0].releases.length > 1
+        ) {
+          setAllReleases(response.data.franchises[0].releases);
+        } else {
+          // Fallback: шукаємо релізи за назвою
+          const searchName =
+            response?.data?.names?.ru || response?.data?.names?.en || '';
+          if (searchName) {
+            $api
+              .get('/anime/catalog/releases', {
+                params: { search: searchName },
+              })
+              .then(res => {
+                // Додаємо логування для дебагу
+                console.log('catalog releases res.data:', res.data);
+                // Додаємо поточний тайтл, якщо його немає у списку
+                let releases = res.data || [];
+                if (
+                  !releases.some((r: any) => r.code === response?.data?.code)
+                ) {
+                  releases = [
+                    ...releases,
+                    {
+                      code: response?.data?.code,
+                      names: response?.data?.names,
+                      ordinal: releases.length + 1,
+                    },
+                  ];
+                }
+                // Сортуємо за ordinal або іншим полем
+                releases.sort(
+                  (a: any, b: any) => (a.ordinal || 0) - (b.ordinal || 0),
+                );
+                setAllReleases(releases);
+                // Лог фінального масиву
+                console.log('allReleases set:', releases);
+              });
+          }
+        }
       });
   }, [code]);
 
@@ -40,7 +93,9 @@ export const AnimeDetailPage = () => {
   // Автоматичний перехід між епізодами
   const handleEpisodeEnd = () => {
     if (title?.player.list) {
-      const nextEpisode = title.player.list.find(e => e.episode === activeEpisode + 1);
+      const nextEpisode = title.player.list.find(
+        e => e.episode === activeEpisode + 1,
+      );
       if (nextEpisode) {
         setActiveEpisode(nextEpisode.episode);
       }
@@ -66,27 +121,31 @@ export const AnimeDetailPage = () => {
               ))}
             </div>
             {/* ПОРЯДОК ПРОСМОТРА */}
-            {title?.franchises?.[0]?.releases && title.franchises[0].releases.length > 0 &&(
-            <div className="mt-5 p-5 bg-slate-800/20 rounded-lg">
-              <h2 className="text-xl font-semibold mb-3">Порядок просмотра:</h2>
-              <ul className="list-disc pl-5">
-                {title?.franchises?.[0]?.releases.map(season => (
-                  <li key={season.id} className="mb-2">
-                    <Link
-                      to={`/title/${season.code}`}
-                      className={`relative transition-colors duration-200 
-                        before:absolute before:bottom-0 before:left-0 before:w-0 before:h-[2px] 
-                        before:bg-gray-500 before:transition-all before:duration-200 
-                        hover:before:w-full ${
-                          code === season.code ? "text-gray-500 font-semibold" : "text-white"
-                        }`}
-                    >
-                      {season.ordinal}. {season.names.ru || season.names.en}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            {allReleases.length > 0 && (
+              <div className="mt-5 p-5 bg-slate-800/20 rounded-lg">
+                <h2 className="text-xl font-semibold mb-3">
+                  Порядок просмотра:
+                </h2>
+                <ul className="list-disc pl-5">
+                  {allReleases.map(season => (
+                    <li key={season.code} className="mb-2">
+                      <Link
+                        to={`/title/${season.code}`}
+                        className={`relative transition-colors duration-200 
+                          before:absolute before:bottom-0 before:left-0 before:w-0 before:h-[2px] 
+                          before:bg-gray-500 before:transition-all before:duration-200 
+                          hover:before:w-full ${
+                            code === season.code
+                              ? 'text-gray-500 font-semibold'
+                              : 'text-white'
+                          }`}
+                      >
+                        {season.ordinal}. {season.names?.ru || season.names?.en}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             )}
           </div>
         </div>

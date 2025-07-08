@@ -1,40 +1,40 @@
 import { useEffect, useState } from 'react';
 import { $api } from '../../api';
-import { Pagination, PaginationProps } from 'antd';
-import { AnimeList, IPagination, Title } from '../../types/anime.types';
+import { DarkPagination } from '../../components/DarkPagination/DarkPagination';
+import { AnimeList, Title } from '../../types/anime.types';
 import { AnimeCard } from '../../components';
 import { Loader } from '../../components/Loader/Loader';
 
+const PAGE_SIZE = 6;
+const TOTAL_PAGES = 37;
 
 export const AnimeListPage = () => {
   const [titles, setTitles] = useState<Title[]>();
-  const [pagination, setPagination] = useState<IPagination>();
   const [activePage, setActivePage] = useState(1);
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
 
-  const changePage: PaginationProps['onChange'] = page => {
+  const changePage = (page: number) => {
     setActivePage(page);
   };
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     $api
       .get<AnimeList>('/title/updates', {
         params: {
           playlist_type: 'array',
           page: activePage,
-          items_per_page: 6,
+          items_per_page: PAGE_SIZE,
         },
       })
       .then(response => {
         setTitles(response.data.list);
-        setPagination(response.data.pagination);
-        setLoading(false);
-      });
+      })
+      .finally(() => setLoading(false));
   }, [activePage]);
 
-  if (loading){ 
-     return <Loader />;
+  if (loading) {
+    return <Loader />;
   }
 
   return (
@@ -42,7 +42,7 @@ export const AnimeListPage = () => {
       <div className="container py-5">
         <div className="grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1 gap-5 justify-items-center">
           {titles &&
-            titles?.map(title => (
+            titles.map(title => (
               <AnimeCard
                 key={title.id}
                 code={title?.code}
@@ -52,15 +52,11 @@ export const AnimeListPage = () => {
             ))}
         </div>
         <div className="flex items-center justify-center py-5">
-          <Pagination
-            responsive // адаптивність для різних пристроїв
-            current={activePage} 
-            total={pagination?.pages} 
-            defaultCurrent={1} 
-            onChange={changePage} 
-            showSizeChanger={false} 
-            size="small" 
-            className="block" 
+          <DarkPagination
+            current={activePage}
+            total={PAGE_SIZE * TOTAL_PAGES}
+            pageSize={PAGE_SIZE}
+            onChange={changePage}
           />
         </div>
       </div>

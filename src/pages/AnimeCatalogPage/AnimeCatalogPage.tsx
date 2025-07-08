@@ -1,20 +1,11 @@
 import { useEffect, useState } from 'react';
-import {
-  Pagination,
-  PaginationProps,
-  Select,
-  Input,
-  Button,
-  Space,
-  Form,
-  Collapse,
-} from 'antd';
 import { AnimeCard } from '../../components';
 import { Loader } from '../../components/Loader/Loader';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { FilterOutlined } from '@ant-design/icons';
-
+import { Form, Input, Select, Button, Space, Collapse } from 'antd';
+import { DarkPagination } from '../../components/DarkPagination/DarkPagination';
 const { Option } = Select;
 
 // Прямая ссылка на API вместо использования переменных среды
@@ -292,7 +283,7 @@ export const AnimeCatalogPage = () => {
   }, []);
 
   // Изменение страницы
-  const handlePageChange: PaginationProps['onChange'] = page => {
+  const handlePageChange = (page: number) => {
     const values = form.getFieldsValue();
     fetchAnime({ ...values, page });
   };
@@ -582,14 +573,11 @@ export const AnimeCatalogPage = () => {
       </div>
 
       <div className="flex items-center justify-center py-4 mt-3">
-        <Pagination
-          responsive
+        <DarkPagination
           current={pagination.current}
           total={pagination.total}
           pageSize={pagination.pageSize}
           onChange={handlePageChange}
-          showSizeChanger={false}
-          size="small"
         />
       </div>
     </div>
